@@ -65,9 +65,6 @@
 
 #define CONFIG_BLOCKS			0x04			//Number of blocks assigned for config data
 
-static unsigned char sfcx_page[MAX_PAGE_SZ];   //Max known hardware physical page size
-static unsigned char sfcx_block[MAX_BLOCK_SZ]; //Max known hardware physical block size
-
 #define RAW_NAND_64				0x4200000
 
 #define SFCX_INITIALIZED		1
