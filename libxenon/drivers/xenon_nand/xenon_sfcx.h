@@ -116,8 +116,12 @@ void sfcx_set_blockversion(unsigned char *data, int ver);
 void sfcx_set_pagevalid(unsigned char *data);
 void sfcx_set_pageinvalid(unsigned char *data);
 int sfcx_is_pagevalid(unsigned char *data);
+int sfcx_is_pagezeroed(unsigned char *data);
+int sfcx_is_pageempty(unsigned char *data);
 int sfcx_block_to_address(int block);
 int sfcx_address_to_block(int address);
+int sfcx_block_to_rawaddress(int block);
+int sfcx_rawaddress_to_block(int address);
 
 int sfcx_read_metadata_type(void);
 
