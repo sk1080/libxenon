@@ -3,8 +3,6 @@
 #include "xenon_sfcx.h"
 
 struct sfc sfc = {0};
-//static unsigned char sfcx_page[MAX_PAGE_SZ];   //Max known hardware physical page size
-//static unsigned char sfcx_block[MAX_BLOCK_SZ]; //Max known hardware physical block size
 
 void sfcx_writereg(int addr, unsigned long data)
 {
