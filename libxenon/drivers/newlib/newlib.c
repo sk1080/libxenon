@@ -406,6 +406,7 @@ void _exit(int status)
 		vfs_console_write(NULL,s,strlen(s));
 		xenon_set_single_thread_mode();
 		
+		try_return_to_xell(0xc8070000,0x1c000000); // xell-gggggg (ggboot)
 		try_return_to_xell(0xc8095060,0x1c040000); // xell-2f (freeboot)
 		try_return_to_xell(0xc8100000,0x1c000000); // xell-1f, xell-ggggggg
 	}
@@ -435,28 +436,19 @@ int unlink(const char *file)
 
 int gettimeofday(struct timeval * tp, void * tzp) {
     unsigned char msg[16] = {0x04};
-    unsigned long msec;
+    unsigned long long msec;
     unsigned long sec;
+	
+	xenon_smc_send_message(msg);
+	xenon_smc_receive_response(msg);
 
-    xenon_smc_send_message(msg);
-    xenon_smc_receive_message(msg);
-
-    msec = msg[1] | (msg[2] << 8) | (msg[3] << 16) | (msg[4] << 24) | ((unsigned long long) msg[5] << 32);
-
-    //      printf("smc ret : %d\r\n", msec);
-
+	msec = msg[1] | (msg[2] << 8) | (msg[3] << 16) | (msg[4] << 24) | ((unsigned long long) msg[5] << 32);
+	
     sec = msec / 1000;
-
     tp->tv_sec = sec + RTC_BASE;
-
     msec -= sec * 1000;
-
     tp->tv_usec = msec * 1000;
 
-    //printf("s:%d - %ms:%d\r\n", tp->tv_sec, tp->tv_usec);
-
-    //printf("%s\r\n",ctime(&tp->tv_sec));
-    
     return 0;
 }
 #endif
